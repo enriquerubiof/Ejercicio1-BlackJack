@@ -1,5 +1,7 @@
 package clases;
 
+import excepciones.CartaIncorrectaException;
+
 public class Carta
 {
 	enum Palo
@@ -10,8 +12,12 @@ public class Carta
 	private Palo palo;
 	
 
-	public Carta(int numero, Palo palo)
+	public Carta(int numero, Palo palo) throws CartaIncorrectaException
 	{
+		if (numero < 1 || numero > 13)
+		{
+			throw new CartaIncorrectaException();
+		}
 		this.numero = numero;
 		this.palo = palo;
 	}
@@ -26,19 +32,19 @@ public class Carta
 	
 	@Override
 	public String toString() {
-		return numero + "-" + palo;
+		return this.mostrarNumero() + "-" + palo;
 	}
 
-	public int getValor(Mano mano)
+	public int getValor()
 	{
 		int valor = this.getNumero();
 		if (valor == 1)
-		/*{		if (mano.valorMano() + 11 > 21)
+		/*{
+			if (valorMmano + 11 > 21)
 				valor = 1;
-			else
-			*/
+			else*/
 				valor = 11;
-		// }
+		//}
 		else if (valor == 11 || valor == 12 || valor == 13)
 			valor = 10;
 		return valor;
@@ -46,7 +52,7 @@ public class Carta
 	
 	public String mostrarNumero()
 	{
-		String valor = String.valueOf(this.getNumero());
+		String valor = "" + this.getNumero();
 		if (valor.equals("1"))
 			valor = "AS";
 		else if (valor.equals("11"))

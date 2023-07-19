@@ -21,16 +21,14 @@ public class Mano extends Mazo
 		int valor = 0;
 		for (int i = 0; i < this.baraja.size(); i++)
 		{
-			valor += this.baraja.get(i).getValor(this);
+			valor += this.baraja.get(i).getValor();
 		}
 		return valor;
 	}
 
 	public boolean finDelJuego()
 	{
-		if (this.valorMano() > 21)
-			return true;
-		return false;
+		return this.valorMano() > 21;
 	}
 
 	public void pedirCarta(Mazo mazo)

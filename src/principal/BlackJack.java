@@ -43,6 +43,7 @@ public class BlackJack
 				System.out.println(separador);
 			}
 		}
+		sc.nextLine();
 		System.out.println(separador);
 		while (manoPJ2.valorMano() < 17)
 		{

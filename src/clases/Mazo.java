@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import clases.Carta.Palo;
+import excepciones.CartaIncorrectaException;
 
 public class Mazo
 {
@@ -14,7 +15,12 @@ public class Mazo
 		this.baraja = new ArrayList<Carta>();
 		for (int i = 1; i <= 13; i++)
 			for (Palo p: Palo.values())
-				this.baraja.add(new Carta(i, p));
+				try {
+					this.baraja.add(new Carta(i, p));
+				} catch (CartaIncorrectaException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	}
 
 	public ArrayList<Carta> getBaraja() {
@@ -45,7 +51,8 @@ public class Mazo
 		Collections.shuffle(baraja);
 	}
 
-	public Carta solicitarCarta() {
+	protected Carta solicitarCarta()
+	{
 		Carta carta = this.getBaraja().get(0);
 		this.getBaraja().remove(0);
 		return carta;
