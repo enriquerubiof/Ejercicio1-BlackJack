@@ -157,10 +157,10 @@ public class MesaBlackJack extends JFrame {
 		lblTuCarta2_15.setAlignmentY(0.0f);
 		contentPane.add(lblTuCarta2_15, "cell 1 1 1 3");
 		
-		btnNewButton = new JButton("New button");
+		btnNewButton = new JButton("Comenzar");
 		contentPane.add(btnNewButton, "cell 6 2 3 1,alignx center");
 		
-		btnNewButton_1 = new JButton("New button");
+		btnNewButton_1 = new JButton("Pasar");
 		contentPane.add(btnNewButton_1, "cell 10 2 3 1,alignx center");
 		
 		lblTuCarta1 = new JLabel("");
