@@ -29,11 +29,16 @@ public class Carta
 		return numero + "-" + palo;
 	}
 
-	public int getValor()
+	public int getValor(Mano mano)
 	{
 		int valor = this.getNumero();
 		if (valor == 1)
-			valor = 11;
+		/*{		if (mano.valorMano() + 11 > 21)
+				valor = 1;
+			else
+			*/
+				valor = 11;
+		// }
 		else if (valor == 11 || valor == 12 || valor == 13)
 			valor = 10;
 		return valor;

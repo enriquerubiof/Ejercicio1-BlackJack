@@ -7,7 +7,7 @@ import clases.Carta.Palo;
 
 public class Mazo
 {
-	private ArrayList<Carta> baraja;
+	protected ArrayList<Carta> baraja;
 	
 	public Mazo()
 	{
