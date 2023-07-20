@@ -6,7 +6,7 @@ public class Carta
 {
 	enum Palo
 	{
-		clubs, diamonds, hearts, spades
+		treboles, diamantes, corazones, picas
 	};
 	private int numero;
 	private Palo palo;
@@ -32,7 +32,7 @@ public class Carta
 	
 	@Override
 	public String toString() {
-		return this.mostrarNumero() + "_of_" + palo;
+		return this.mostrarNumero() + "_de_" + palo;
 	}
 
 	public int getValor()
@@ -51,13 +51,13 @@ public class Carta
 	{
 		String valor = "" + this.getNumero();
 		if (valor.equals("1"))
-			valor = "ace";
+			valor = "as";
 		else if (valor.equals("11"))
-			valor = "jack";
+			valor = "jota";
 		else if (valor.equals("12"))
-			valor = "queen";
+			valor = "reina";
 		else if (valor.equals("13"))
-			valor = "king";
+			valor = "rey";
 		return valor;
 	}
 }

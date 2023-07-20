@@ -38,7 +38,7 @@ public class Mazo
 		int cont = 0;
 		for (int i = 0; i < this.getBaraja().size(); i++)
 		{
-			cad += String.format("%-12s", this.baraja.get(cont++)) + " | ";
+			cad += String.format("%-18s", this.baraja.get(cont++)) + " | ";
 			if (cont % 4 == 0 && cont != 0)
 				cad += "\n";
 		}

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.applet.AudioClip;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,10 +9,12 @@ import javax.swing.border.EmptyBorder;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import java.awt.Toolkit;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JLabel;
-import javax.swing.BoxLayout;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
@@ -21,15 +24,15 @@ import clases.Mazo;
 
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Label;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
-import java.awt.Window.Type;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MesaBlackJack extends JFrame {
@@ -82,7 +85,8 @@ public class MesaBlackJack extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MesaBlackJack() {
+	public MesaBlackJack()
+	{
 		carta = 0;
 		cartasPuls = new ArrayList<JLabel>();
 		jugadores = new ArrayList<Mano>();
@@ -102,9 +106,10 @@ public class MesaBlackJack extends JFrame {
 		contentPane.setBorder(new EmptyBorder(0, 0, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[25.00][150][125px][][][][][][][][][][][][][][][][]", "[grow][210][39.00][210][grow]"));
+		contentPane.setLayout(new MigLayout("", "[25.00][150][125px][5][][5][][][][][][][][][][][][][]", "[grow][210][39.00][210][grow]"));
 		
 		lblTuCarta1 = new JLabel("");
+		lblTuCarta1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTuCarta1.addMouseListener(new MouseAdapter()
 		{
 			public void mouseClicked(MouseEvent e)
@@ -248,7 +253,8 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblBaraja, "cell 1 1 1 3");
 		
 		btnComenzar = new JButton("Comenzar");
-		btnComenzar.addActionListener(new ActionListener() {
+		btnComenzar.addActionListener(new ActionListener()
+		{
 			public void actionPerformed(ActionEvent e)
 			{
 				activarTablero();
@@ -330,6 +336,11 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblRvCarta8, "cell 17 3");
 	}
 
+	protected void open(AudioInputStream audioInputStream) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	protected void voltearCarta(MouseEvent e)
 	{
 		if (carta == 1)
@@ -342,30 +353,61 @@ public class MesaBlackJack extends JFrame {
 			cartasPuls.add(this.lblTuCarta7);
 			cartasPuls.add(this.lblTuCarta8);
 		}
-		this.jugadores.get(0).pedirCartathis.jugadores.get(0));
-		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/" +
-		this.jugadores.get(0).getBaraja().get(this.jugadores.get(0).getBaraja().size()))));
+		this.jugadores.get(0).pedirCarta(this.baraja);
+
+		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/" + 
+				this.jugadores.get(0).getBaraja().get(this.jugadores.get(0).getBaraja().size() - 1) + ".png")));
+		
 		cartasPuls.get(carta-1).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
 		carta++;
 	}
 
 	protected void voltearCartaFinal(MouseEvent e)
 	{
-		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/10_de_treboles.png")));
+		this.jugadores.get(0).pedirCarta(this.baraja);
+
+		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/" + 
+				this.jugadores.get(0).getBaraja().get(this.jugadores.get(0).getBaraja().size() - 1) + ".png")));
 		carta++;
 	}
 
 	protected void activarTablero()
 	{
+		/*AudioClip sonido;
+		sonido = java.applet.Applet.newAudioClip(getClass().getResource("/musica/sonido1.mp3"));
+		 sonido = java.applet.Applet.newAudioClip(getClass().getResource("/musica/sonido1.mp3"));
+		sonido.play();*/
+		Clip clip = null;
+		try {
+			clip=AudioSystem.getClip();
+		} catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			clip.open(AudioSystem.getAudioInputStream( getClass().getResourceAsStream("/musica/sonido1.wav")));
+		} catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedAudioFileException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		clip.start();
+		
 		this.btnComenzar.setEnabled(false);
 		this.btnPasar.setEnabled(true);
 		this.lblTuCarta1.setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
-		carta++;
-		baraja = new Mazo();
-		jugador1 = new Mano();
-		banca = new Mano();
-		jugadores.add(jugador1);
-		jugadores.add(banca);
+		this.carta++;
+		this.baraja = new Mazo();
+		this.baraja.barajar();
+		this.jugador1 = new Mano();
+		this.banca = new Mano();
+		this.jugadores.add(jugador1);
+		this.jugadores.add(banca);
 	}
 
 }
