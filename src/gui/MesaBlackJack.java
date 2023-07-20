@@ -85,11 +85,7 @@ public class MesaBlackJack extends JFrame {
 	public MesaBlackJack() {
 		carta = 0;
 		cartasPuls = new ArrayList<JLabel>();
-		baraja = new Mazo();
-		jugador1 = new Mano();
-		banca = new Mano();
-		jugadores.add(jugador1);
-		jugadores.add(banca);
+		jugadores = new ArrayList<Mano>();
 		setType(Type.POPUP);
 		setResizable(false);
 		setIgnoreRepaint(true);
@@ -346,14 +342,16 @@ public class MesaBlackJack extends JFrame {
 			cartasPuls.add(this.lblTuCarta7);
 			cartasPuls.add(this.lblTuCarta8);
 		}
-		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/10_of_clubs.png")));
+		this.jugadores.get(0).pedirCartathis.jugadores.get(0));
+		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/" +
+		this.jugadores.get(0).getBaraja().get(this.jugadores.get(0).getBaraja().size()))));
 		cartasPuls.get(carta-1).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
 		carta++;
 	}
 
 	protected void voltearCartaFinal(MouseEvent e)
 	{
-		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/10_of_clubs.png")));
+		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/10_de_treboles.png")));
 		carta++;
 	}
 
@@ -363,6 +361,11 @@ public class MesaBlackJack extends JFrame {
 		this.btnPasar.setEnabled(true);
 		this.lblTuCarta1.setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
 		carta++;
+		baraja = new Mazo();
+		jugador1 = new Mano();
+		banca = new Mano();
+		jugadores.add(jugador1);
+		jugadores.add(banca);
 	}
 
 }
