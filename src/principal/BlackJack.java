@@ -26,6 +26,7 @@ public class BlackJack
 		while (seguir == 1)
 		{
 			manoPJ1.pedirCarta(mazo);
+			manoPJ1.valorMano();
 			tuPunt = manoPJ1.valorMano();
 			System.out.println("Tu mano actualmente es:");
 			System.out.println(manoPJ1);
@@ -45,9 +46,11 @@ public class BlackJack
 		}
 		sc.nextLine();
 		System.out.println(separador);
+		manoPJ2.valorMano();
 		while (manoPJ2.valorMano() < 17)
 		{
 			manoPJ2.pedirCarta(mazo);
+			manoPJ2.valorMano();
 			rivalPunt = manoPJ2.valorMano();
 			System.out.println("El rival robó una carta. Pulse para continuar.");
 			System.out.println(manoPJ2);

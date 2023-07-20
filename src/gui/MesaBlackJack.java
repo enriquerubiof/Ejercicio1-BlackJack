@@ -15,6 +15,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
+
+import clases.Mano;
+import clases.Mazo;
+
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Label;
@@ -50,6 +54,10 @@ public class MesaBlackJack extends JFrame {
 	private JLabel lblBaraja;
 	private JButton btnComenzar;
 	private JButton btnPasar;
+	Mazo baraja;
+	Mano jugador1;
+	Mano banca;
+	ArrayList<Mano> jugadores;
 	
 	private int carta;
 	private ArrayList<JLabel> cartasPuls;
@@ -77,6 +85,11 @@ public class MesaBlackJack extends JFrame {
 	public MesaBlackJack() {
 		carta = 0;
 		cartasPuls = new ArrayList<JLabel>();
+		baraja = new Mazo();
+		jugador1 = new Mano();
+		banca = new Mano();
+		jugadores.add(jugador1);
+		jugadores.add(banca);
 		setType(Type.POPUP);
 		setResizable(false);
 		setIgnoreRepaint(true);
@@ -163,6 +176,15 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblTuCarta4, "cell 8 1");
 		
 		lblTuCarta5 = new JLabel("");
+		lblTuCarta5.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				if (carta == 5)
+				voltearCarta(e);
+			}
+		});
 		lblTuCarta5.setSize(new Dimension(125, 182));
 		lblTuCarta5.setPreferredSize(new Dimension(125, 182));
 		lblTuCarta5.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -171,6 +193,15 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblTuCarta5, "cell 10 1");
 		
 		lblTuCarta6 = new JLabel("");
+		lblTuCarta6.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				if (carta == 6)
+				voltearCarta(e);
+			}
+		});
 		lblTuCarta6.setSize(new Dimension(125, 182));
 		lblTuCarta6.setPreferredSize(new Dimension(125, 182));
 		lblTuCarta6.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -179,6 +210,15 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblTuCarta6, "cell 12 1");
 		
 		lblTuCarta7 = new JLabel("");
+		lblTuCarta7.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				if (carta == 7)
+				voltearCarta(e);
+			}
+		});
 		lblTuCarta7.setSize(new Dimension(125, 182));
 		lblTuCarta7.setPreferredSize(new Dimension(125, 182));
 		lblTuCarta7.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -187,6 +227,14 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblTuCarta7, "cell 14 1");
 		
 		lblTuCarta8 = new JLabel("");
+		lblTuCarta8.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+				voltearCartaFinal(e);
+			}
+		});
 		lblTuCarta8.setSize(new Dimension(125, 182));
 		lblTuCarta8.setPreferredSize(new Dimension(125, 182));
 		lblTuCarta8.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -300,6 +348,12 @@ public class MesaBlackJack extends JFrame {
 		}
 		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/10_of_clubs.png")));
 		cartasPuls.get(carta-1).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
+		carta++;
+	}
+
+	protected void voltearCartaFinal(MouseEvent e)
+	{
+		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/10_of_clubs.png")));
 		carta++;
 	}
 
