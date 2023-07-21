@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import java.awt.Component;
 import javax.swing.border.LineBorder;
 
+import clases.Juego;
 import clases.Mano;
 import clases.Mazo;
 
@@ -57,12 +58,10 @@ public class MesaBlackJack extends JFrame {
 	private JLabel lblBaraja;
 	private JButton btnComenzar;
 	private JButton btnPasar;
-	Mazo baraja;
-	Mano jugador1;
-	Mano banca;
-	ArrayList<Mano> jugadores;
+	private Juego partida;
+	private int momento;
+	private boolean seguir;
 	
-	private int carta;
 	private ArrayList<JLabel> cartasPuls;
 	/**
 	 * Launch the application.
@@ -87,9 +86,9 @@ public class MesaBlackJack extends JFrame {
 	 */
 	public MesaBlackJack()
 	{
-		carta = 0;
+		this.momento = 0;
 		cartasPuls = new ArrayList<JLabel>();
-		jugadores = new ArrayList<Mano>();
+		seguir = true;
 		setType(Type.POPUP);
 		setResizable(false);
 		setIgnoreRepaint(true);
@@ -114,7 +113,7 @@ public class MesaBlackJack extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-				if (carta == 1)
+				if (momento == 1)
 					voltearCarta(e);
 			}
 		});
@@ -132,7 +131,7 @@ public class MesaBlackJack extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				if (carta == 2)
+				if (momento == 2)
 				voltearCarta(e);
 			}
 		});
@@ -149,7 +148,7 @@ public class MesaBlackJack extends JFrame {
 		{
 			public void mouseClicked(MouseEvent e)
 			{
-					if (carta == 3)
+					if (momento == 3)
 					voltearCarta(e);
 			}
 		});
@@ -165,7 +164,7 @@ public class MesaBlackJack extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				if (carta == 4)
+				if (momento == 4)
 				voltearCarta(e);
 			}
 		});
@@ -182,7 +181,7 @@ public class MesaBlackJack extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				if (carta == 5)
+				if (momento == 5)
 				voltearCarta(e);
 			}
 		});
@@ -199,7 +198,7 @@ public class MesaBlackJack extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				if (carta == 6)
+				if (momento == 6)
 				voltearCarta(e);
 			}
 		});
@@ -216,7 +215,7 @@ public class MesaBlackJack extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				if (carta == 7)
+				if (momento == 7)
 				voltearCarta(e);
 			}
 		});
@@ -336,14 +335,9 @@ public class MesaBlackJack extends JFrame {
 		contentPane.add(lblRvCarta8, "cell 17 3");
 	}
 
-	protected void open(AudioInputStream audioInputStream) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	protected void voltearCarta(MouseEvent e)
 	{
-		if (carta == 1)
+		if (momento == 1)
 		{
 			cartasPuls.add(this.lblTuCarta2);
 			cartasPuls.add(this.lblTuCarta3);
@@ -353,30 +347,28 @@ public class MesaBlackJack extends JFrame {
 			cartasPuls.add(this.lblTuCarta7);
 			cartasPuls.add(this.lblTuCarta8);
 		}
-		this.jugadores.get(0).pedirCarta(this.baraja);
+		this.partida.getJugadores().get(0).pedirCarta(this.partida.getBaraja());
 
 		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/" + 
-				this.jugadores.get(0).getBaraja().get(this.jugadores.get(0).getBaraja().size() - 1) + ".png")));
+				this.partida.getJugadores().get(0).getBaraja().get(this.partida.getJugadores().get(0).getBaraja().size() - 1) + ".png")));
 		
-		cartasPuls.get(carta-1).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
-		carta++;
+		cartasPuls.get(momento - 1).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
+		momento++;
 	}
 
 	protected void voltearCartaFinal(MouseEvent e)
 	{
-		this.jugadores.get(0).pedirCarta(this.baraja);
+		this.partida.getJugadores().get(0).pedirCarta(this.partida.getBaraja());
 
 		((JLabel)e.getComponent()).setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/cartasPoker/" + 
-				this.jugadores.get(0).getBaraja().get(this.jugadores.get(0).getBaraja().size() - 1) + ".png")));
-		carta++;
+				this.partida.getJugadores().get(0).getBaraja().get(this.partida.getJugadores().get(0).getBaraja().size() - 1) + ".png")));
+		momento++;
 	}
 
 	protected void activarTablero()
 	{
-		/*AudioClip sonido;
-		sonido = java.applet.Applet.newAudioClip(getClass().getResource("/musica/sonido1.mp3"));
-		 sonido = java.applet.Applet.newAudioClip(getClass().getResource("/musica/sonido1.mp3"));
-		sonido.play();*/
+		this.partida = new Juego(1);
+		
 		Clip clip = null;
 		try {
 			clip=AudioSystem.getClip();
@@ -401,13 +393,7 @@ public class MesaBlackJack extends JFrame {
 		this.btnComenzar.setEnabled(false);
 		this.btnPasar.setEnabled(true);
 		this.lblTuCarta1.setIcon(new ImageIcon(MesaBlackJack.class.getResource("/imagenes/reverso5.jpg")));
-		this.carta++;
-		this.baraja = new Mazo();
-		this.baraja.barajar();
-		this.jugador1 = new Mano();
-		this.banca = new Mano();
-		this.jugadores.add(jugador1);
-		this.jugadores.add(banca);
+		this.momento++;
 	}
 
 }

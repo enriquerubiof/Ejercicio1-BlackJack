@@ -4,10 +4,6 @@ import excepciones.CartaIncorrectaException;
 
 public class Carta
 {
-	enum Palo
-	{
-		treboles, diamantes, corazones, picas
-	};
 	private int numero;
 	private Palo palo;
 	
@@ -38,26 +34,27 @@ public class Carta
 	public int getValor()
 	{
 		int valor = this.getNumero();
-		if (valor == 1)
-		{
-			valor = 1;
-		}
-		else if (valor == 11 || valor == 12 || valor == 13)
-			valor = 10;
-		return valor;
+		if (this.getNumero() == 1)
+			return 1;
+		else if (this.getNumero() == 11 || this.getNumero() == 12 || this.getNumero() == 13)
+			return 10;
+		return this.getNumero();
 	}
 	
 	public String mostrarNumero()
 	{
-		String valor = "" + this.getNumero();
-		if (valor.equals("1"))
-			valor = "as";
-		else if (valor.equals("11"))
-			valor = "jota";
-		else if (valor.equals("12"))
-			valor = "reina";
-		else if (valor.equals("13"))
-			valor = "rey";
-		return valor;
+		switch (this.getNumero())
+		{
+			case 1:
+				return "as";
+			case 11:
+				return "jota";
+			case 12:
+				return "reina";
+			case 13:
+				return "rey";
+			default:
+				return "" + this.getNumero();
+		}
 	}
 }

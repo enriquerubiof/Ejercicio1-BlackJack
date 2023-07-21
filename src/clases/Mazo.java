@@ -1,9 +1,8 @@
 package clases;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import clases.Carta.Palo;
+import java.util.Collections;
 import excepciones.CartaIncorrectaException;
 
 public class Mazo
@@ -25,10 +24,6 @@ public class Mazo
 
 	public ArrayList<Carta> getBaraja() {
 		return baraja;
-	}
-
-	public void setBaraja(ArrayList<Carta> baraja) {
-		this.baraja = baraja;
 	}
 
 	@Override

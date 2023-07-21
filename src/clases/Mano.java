@@ -13,7 +13,6 @@ public class Mano extends Mazo
 	@Override
 	public String toString()
 	{
-		this.valorMano();
 		return "Puntuación: " + this.valorMano() + "\n" + super.toString();
 	}
 
@@ -30,9 +29,8 @@ public class Mano extends Mazo
 			valor += this.baraja.get(i).getValor();
 		}
 		if (hayAses && valor + 10 <= 21)
-			return valor + 10;
-		else
-			return valor;
+			valor += 10;
+		return valor;
 	}
 
 	public boolean finDelJuego()
